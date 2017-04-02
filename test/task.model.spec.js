@@ -137,7 +137,7 @@ describe('Task', function () {
 
     describe('addChild', function() {
 
-      xit('should return a promise for the new child', function() {
+      it('should return a promise for the new child', function() {
         return task.addChild({ name: 'task2' })
         .then(function(child) {
           expect(child.name).to.equal('task2');
@@ -153,7 +153,7 @@ describe('Task', function () {
         return task.addChild({ name: 'foo' });
       });
 
-      xit('should return a promise for an array of the task\'s children', function() {
+      it('should return a promise for an array of the task\'s children', function() {
         return task.getChildren()
         .then(function(children) {
           expect(children).to.have.length(1);
@@ -178,7 +178,7 @@ describe('Task', function () {
       beforeEach(childBuilder);
       beforeEach(childBuilder);
 
-      xit('returns a promise for an array of siblings', function() {
+      it('returns a promise for an array of siblings', function() {
         return childrenReferences[0].getSiblings()
         .then(function(siblings) {
           expect(siblings).to.have.length(1);
@@ -220,7 +220,7 @@ describe('Task', function () {
 
     describe('removal', function(){
 
-      xit('also removes all child tasks', function(){
+      it('also removes all child tasks', function(){
         return studyTask.destroy()
         .then(function(){
           return Task.findAll();

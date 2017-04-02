@@ -52,9 +52,38 @@ var Task = db.define('Task', {
       })
     }
   },
-  instancemethods: {
-
+  instanceMethods: {
+    addChild: function(child) {
+      return Task.create({
+        name: child.name,
+        parentId: this.id});
+    },
+    getChildren: function() {
+      return Task.findAll({
+        where: {
+          parentId: this.id
+        }
+      })
+    },
+    getSiblings: function() {
+        return Task.findAll({
+                  where: {
+                     id: { $ne: this.id},
+                     parentId: this.parentId
+                  }
+               });
+    }
+  },
+  hooks: {
+    beforeDestroy: function(task) {
+      task.destroy({
+        where: {
+          parentId: task.id
+        }
+      })
+    }
   }
+
   //---------^^^---------  your code above  ---------^^^----------
 });
 
