@@ -20,11 +20,41 @@ var Task = db.define('Task', {
   due: Sequelize.DATE
 }, {
   //---------VVVV---------  your code below  ---------VVV----------
+  getterMethods: {
+    timeRemaining: function() {
+      if ( !this.due) return Infinity;
+      let date = new Date();
+      return  this.due - date;
+    },
+    overdue: function() {
+      let isOverdue;
+      let timeDiff = this.due - new Date();
+      isOverdue =  timeDiff >= 0 ? false : true;
+      if (this.complete === true) isOverdue = false;
+      return isOverdue;
+    }
+  },
+  classMethods: {
+    clearCompleted: function() {
+      return this.destroy({
+        where: {
+          complete: true
+        }
+      })
+    },
+    completeAll: function() {
+      return this.update({
+        complete: true
+      },{
+        where: {
+          complete: false
+        }
+      })
+    }
+  },
+  instancemethods: {
 
-
-
-
-
+  }
   //---------^^^---------  your code above  ---------^^^----------
 });
 
